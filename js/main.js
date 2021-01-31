@@ -1,9 +1,9 @@
 'use strict';
 
 const getRandomInt = function (min = 0, max = 10) {
-  min = Math.floor(min);
-  max = Math.ceil(max);
-  return Math.floor(Math.random() * (max - min)) + min;
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 getRandomInt();
