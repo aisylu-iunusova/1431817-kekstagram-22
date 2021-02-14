@@ -1,4 +1,3 @@
 'use strict';
 
-// import { posts } from './data.js';
-
+import './post.js';
