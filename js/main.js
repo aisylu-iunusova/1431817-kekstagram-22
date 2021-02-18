@@ -1,3 +1,6 @@
 'use strict';
 
-import './post.js';
+import './post-gallery.js';
+
+
+

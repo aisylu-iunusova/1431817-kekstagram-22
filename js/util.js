@@ -24,5 +24,7 @@ export const getRandomArrayElement = function (array) {
   return array[index];
 }
 
-
+export const isEscEvent = function (evt) {
+  return evt.key === ('Escape' || 'Esc');
+};
 
