@@ -21,6 +21,13 @@ const onModalEscKeydown = (evt) => {
 export const openPostModal = function (post) {
   document.body.classList.add('modal-open');
   postModal.classList.remove('hidden');
+
+  const postComments = socialComments.querySelectorAll('li')
+
+  for (let i = 0; i <= postComments.length - 1; i++) {
+    postComments[i].remove();
+  }
+
   creatPostModal(post);
   document.addEventListener('keydown', onModalEscKeydown);
 };
@@ -42,7 +49,7 @@ const creatPostModal = function (post) {
     newSocialComment.querySelector('.social__picture').setAttribute('src', comment.avatar);
     newSocialComment.querySelector('.social__text').textContent = comment.message;
     newSocialComment.querySelector('.social__picture').setAttribute('alt', comment.name);
-    socialComments.insertBefore(newSocialComment, socialComment);
+    socialComments.appendChild(newSocialComment);
   });
 };
 
