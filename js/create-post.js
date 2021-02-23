@@ -1,21 +1,21 @@
 import { isEscEvent } from './util.js';
 import './image-scale.js';
-import './image-effect.js';
+import { resetEffect } from './image-effect.js';
 
 const uploadFileInput = document.querySelector('#upload-file');
 const imgEditForm = document.querySelector('.img-upload__overlay');
 const creatPostCloseButton = document.querySelector('#upload-cancel');
 
-const closeCreatPost = function () {
+const closeCreatePost = () => {
   imgEditForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onCreatPostEscKeydown);
   uploadFileInput.value = '';
 }
 
-const onCreatPostEscKeydown = function (evt) {
+const onCreatPostEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
-    closeCreatPost();
+    closeCreatePost();
   }
 };
 
@@ -26,8 +26,11 @@ uploadFileInput.addEventListener('change', function () {
 });
 
 creatPostCloseButton.addEventListener('click', function () {
-  closeCreatPost();
+  closeCreatePost();
+  resetEffect();
 });
+
+
 
 
 

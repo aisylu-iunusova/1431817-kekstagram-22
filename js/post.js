@@ -18,7 +18,7 @@ const onModalEscKeydown = (evt) => {
   }
 };
 
-export const openPostModal = function (post) {
+export const openPostModal = (post) => {
   document.body.classList.add('modal-open');
   postModal.classList.remove('hidden');
 
@@ -32,13 +32,13 @@ export const openPostModal = function (post) {
   document.addEventListener('keydown', onModalEscKeydown);
 };
 
-const closePostModal = function () {
+const closePostModal = () => {
   document.body.classList.remove('modal-open');
   postModal.classList.add('hidden');
   document.removeEventListener('keydown', onModalEscKeydown);
 }
 
-const creatPostModal = function (post) {
+const creatPostModal = (post) => {
   postModal.querySelector('.big-picture__img img').setAttribute('src', post.url)
   postModal.querySelector('.likes-count').textContent = post.likes;
   postModal.querySelector('.comments-count').textContent = post.comments.lenghth;

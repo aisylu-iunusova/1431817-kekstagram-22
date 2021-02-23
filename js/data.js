@@ -3,13 +3,13 @@ import { POSTS_LENGTH, MESSAGES, NAMES, DESCRIPTIONS } from './const.js';
 
 const uniqueCommentsIds = [];
 
-const createCommentId = function () {
+const createCommentId = () => {
   const id = getRandomUniqueInt(1, 500, uniqueCommentsIds);
   uniqueCommentsIds.push(id);
   return id;
 };
 
-const createComment = function () {
+const createComment = () => {
   return {
     id: createCommentId(),
     avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
@@ -18,14 +18,14 @@ const createComment = function () {
   }
 };
 
-const createComments = function () {
+const createComments = () => {
   const lengthArrayComments = getRandomInt(1, 6);
   const emptyArr = new Array(lengthArrayComments).fill(null);
   const comments = emptyArr.map(() => { return createComment() });
   return comments;
 };
 
-const createPost = function (index) {
+const createPost = (index) => {
   return {
     id: index + 1,
     url: `photos/${index + 1}.jpg`,

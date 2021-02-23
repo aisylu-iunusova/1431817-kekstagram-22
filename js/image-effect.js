@@ -1,3 +1,5 @@
+import { SLIDER_HIDDEN, SLIDER_VISIBLE } from './const.js'
+
 const postImage = document.querySelector('.img-upload__preview');
 const effects = document.querySelectorAll('.effects__radio');
 const effectLevel = document.querySelector('.effect-level__slider')
@@ -32,13 +34,12 @@ const sliderOption = {
   },
 };
 
-effectLevelSlider.style = 'display:none;'
+effectLevelSlider.setAttribute('style', SLIDER_HIDDEN);
 
 window.noUiSlider.create(effectLevel, {
   range: {
     min: 0,
     max: 1,
-
   },
   start: 1,
   step: 0.1,
@@ -56,64 +57,74 @@ window.noUiSlider.create(effectLevel, {
   },
 });
 
-
-const changeImage = function (filterName) {
+const changeImage = (filterName) => {
   effectLevel.noUiSlider.on('update', (values, handle) => {
 
     switch (filterName) {
       case
-        'chrome': postImage.style = `filter: grayscale(${values[handle]})`;
+        'chrome': postImage.setAttribute('style', `filter: grayscale(${values[handle]})`);
         break;
       case
-        'sepia': postImage.style = `filter: sepia(${values[handle]})`;
+        'sepia': postImage.setAttribute('style', `filter: sepia(${values[handle]})`);
         break;
       case
-        'marvin': postImage.style = `filter: invert(${values[handle]}%)`;
+        'marvin': postImage.setAttribute('style', `filter: invert(${values[handle]}%)`);
         break;
       case
-        'phobos': postImage.style = `filter: blur(${values[handle]}px)`;
+        'phobos': postImage.setAttribute('style', `filter: blur(${values[handle]}px)`);
         break;
       case
-        'heat': postImage.style = `filter: brightness(${values[handle]})`;
+        'heat': postImage.setAttribute('style', `filter: brightness(${values[handle]})`);
         break;
+      default:
+        postImage.removeAttribute('style');
     }
 
     effectLevelSliderValue.value = values[handle];
   });
 };
 
+export const resetEffect = () => {
+  effectLevelSlider.setAttribute('style', SLIDER_HIDDEN);
+  effectLevelSliderValue.value = '';
+  postImage.setAttribute('class', 'img-upload__preview');
+  postImage.removeAttribute('style');
+}
+
+const addEffect = (effectName) => {
+  effectLevelSlider.setAttribute('style', SLIDER_VISIBLE)
+  postImage.classList.add(`effects__preview--${effectName}`);
+
+  effectLevel.noUiSlider.updateOptions(
+    {
+      range: {
+        min: sliderOption[effectName].min,
+        max: sliderOption[effectName].max,
+
+      },
+      start: sliderOption[effectName].start,
+      step: sliderOption[effectName].step,
+
+    },
+  );
+  effectLevel.noUiSlider.set(sliderOption[effectName].max);
+};
 
 effects.forEach((effect) => {
 
-  effect.addEventListener('change', function () {
+  effect.addEventListener('change', () => {
     postImage.setAttribute('class', 'img-upload__preview');
 
-    if (this.value === 'none') {
-      effectLevelSlider.style = 'display:none;';
+    if (effect.value === 'none') {
+      resetEffect()
+    } else {
+      addEffect(effect.value);
     }
-    else {
-      effectLevelSlider.style = 'display:block;'
-      postImage.classList.add(`effects__preview--${this.value}`);
-
-      effectLevel.noUiSlider.updateOptions(
-        {
-          range: {
-            min: sliderOption[this.value].min,
-            max: sliderOption[this.value].max,
-
-          },
-          start: sliderOption[this.value].start,
-          step: sliderOption[this.value].step,
-
-        },
-      );
-      effectLevel.noUiSlider.set(sliderOption[this.value].max);
-      changeImage(this.value);
-    }
-
+    changeImage(effect.value);
   });
 
 });
+
 
 
 
