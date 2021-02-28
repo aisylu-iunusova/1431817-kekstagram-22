@@ -1,8 +1,8 @@
-import { isEscEvent } from './util.js';
-import './image-scale.js';
-import { resetEffect } from './image-effect.js';
-import { getInputHashtagFocus } from './image-hashtag.js';
-import { getInputCommentFocus } from './image-comment.js';
+import { isEscEvent } from '../util.js';
+import './scale.js';
+import { resetEffect } from './effect.js';
+import { getInputHashtagFocus } from './hashtag.js';
+import { getInputCommentFocus } from './comment.js';
 
 const uploadFileInput = document.querySelector('#upload-file');
 const imgEditForm = document.querySelector('.img-upload__overlay');

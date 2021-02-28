@@ -1,4 +1,4 @@
-import { SLIDER_HIDDEN, SLIDER_VISIBLE } from './const.js'
+import { SLIDER_HIDDEN, SLIDER_VISIBLE } from '../const.js'
 
 const postImage = document.querySelector('.img-upload__preview');
 const effects = document.querySelectorAll('.effects__radio');

@@ -1,4 +1,4 @@
-import { MAX_LENGTH_COMMENT } from './const.js'
+import { MAX_LENGTH_COMMENT } from '../const.js'
 
 const imageInputComment = document.querySelector('.text__description');
 let isFocus = false;
