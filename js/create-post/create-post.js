@@ -1,6 +1,8 @@
-import { isEscEvent } from './util.js';
-import './image-scale.js';
-import { resetEffect } from './image-effect.js';
+import { isEscEvent } from '../util.js';
+import './scale.js';
+import { resetEffect } from './effect.js';
+import { getInputHashtagFocus } from './hashtag.js';
+import { getInputCommentFocus } from './comment.js';
 
 const uploadFileInput = document.querySelector('#upload-file');
 const imgEditForm = document.querySelector('.img-upload__overlay');
@@ -11,10 +13,12 @@ const closeCreatePost = () => {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onCreatPostEscKeydown);
   uploadFileInput.value = '';
+  document.querySelector('.img-upload__form').reset();
 }
 
 const onCreatPostEscKeydown = (evt) => {
-  if (isEscEvent(evt)) {
+
+  if (isEscEvent(evt) && !getInputHashtagFocus() && !getInputCommentFocus()) {
     closeCreatePost();
   }
 };
