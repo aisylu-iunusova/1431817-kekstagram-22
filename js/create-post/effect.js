@@ -1,4 +1,5 @@
 import { SLIDER_HIDDEN, SLIDER_VISIBLE } from '../const.js'
+import { scaleReset } from './scale.js'
 
 const postImage = document.querySelector('.img-upload__preview');
 const effects = document.querySelectorAll('.effects__radio');
@@ -59,7 +60,6 @@ window.noUiSlider.create(effectLevel, {
 
 const changeImage = (filterName) => {
   effectLevel.noUiSlider.on('update', (values, handle) => {
-
     switch (filterName) {
       case
         'chrome': postImage.setAttribute('style', `filter: grayscale(${values[handle]})`);
@@ -95,26 +95,22 @@ const addEffect = (effectName) => {
   effectLevelSlider.setAttribute('style', SLIDER_VISIBLE)
   postImage.classList.add(`effects__preview--${effectName}`);
 
-  effectLevel.noUiSlider.updateOptions(
-    {
-      range: {
-        min: sliderOption[effectName].min,
-        max: sliderOption[effectName].max,
-
-      },
-      start: sliderOption[effectName].start,
-      step: sliderOption[effectName].step,
-
+  effectLevel.noUiSlider.updateOptions({
+    range: {
+      min: sliderOption[effectName].min,
+      max: sliderOption[effectName].max,
     },
-  );
+    start: sliderOption[effectName].start,
+    step: sliderOption[effectName].step,
+  });
+
   effectLevel.noUiSlider.set(sliderOption[effectName].max);
 };
 
 effects.forEach((effect) => {
-
   effect.addEventListener('change', () => {
     postImage.setAttribute('class', 'img-upload__preview');
-
+    scaleReset();
     if (effect.value === 'none') {
       resetEffect()
     } else {
@@ -122,7 +118,6 @@ effects.forEach((effect) => {
     }
     changeImage(effect.value);
   });
-
 });
 
 

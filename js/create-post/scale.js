@@ -11,6 +11,7 @@ scaleControlSmaller.addEventListener('click', () => {
   if (scaleValue > MIN_SCALE && scaleValue <= MAX_SCALE) {
     scaleValue -= STEP_SCALE;
   }
+
   scaleControlValue.value = `${scaleValue}%`;
   postImage.style = `transform:scale(${scaleValue / 100})`;
 });
@@ -20,7 +21,13 @@ scaleControlBigger.addEventListener('click', () => {
   if (scaleValue >= MIN_SCALE && scaleValue < MAX_SCALE) {
     scaleValue += STEP_SCALE;
   }
+
   scaleControlValue.value = `${scaleValue}%`;
   postImage.style = `transform:scale(${scaleValue / 100})`;
 });
+
+export const scaleReset = () => {
+  scaleControlValue.value = '100%';
+  scaleValue = 100;
+};
 
