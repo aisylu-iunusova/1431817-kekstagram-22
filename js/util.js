@@ -1,3 +1,4 @@
+import { SHOW_ERROR_MESSAGE_TIME } from './const.js';
 
 export const getRandomInt = (min, max) => {
   min = Math.ceil(min);
@@ -26,4 +27,27 @@ export const getRandomArrayElement = (array) => {
 
 export const isEscEvent = (evt) => {
   return evt.key === ('Escape' || 'Esc');
+};
+
+export const showErrorMessage = (message) => {
+  const alertContainer = document.createElement('div');
+  const styles = `
+    z-index: 100;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    padding: 10px 3px;
+    font-size: 25px;
+    text-align: center;
+    background-color: #f74b47;
+  `;
+
+  alertContainer.setAttribute('style', styles);
+  alertContainer.textContent = message;
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, SHOW_ERROR_MESSAGE_TIME);
 };

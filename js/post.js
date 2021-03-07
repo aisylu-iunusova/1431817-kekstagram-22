@@ -1,15 +1,13 @@
-import { isEscEvent } from './util.js'
+import { isEscEvent } from './util.js';
+import { MAX_COMMENT_COUNT } from './const.js'
 
 const postModal = document.querySelector('.big-picture');
-const postModalCloseButton = document.querySelector('#picture-cancel');
+const postModalCloseButton = document.querySelector('.big-picture__cancel');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
-const socialComments = postModal.querySelector('.social__comments');
-const socialComment = socialComments.querySelector('li');
-
-//скрываем блоки счётчика комментариев и загрузки новых комментариев
-socialCommentCount.classList.add('hidden');
-commentsLoader.classList.add('hidden');
+const socialCommentList = postModal.querySelector('.social__comments');
+const socialComment = socialCommentList.querySelector('.social__comment');
+let comments = [];
 
 const onModalEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
@@ -18,43 +16,68 @@ const onModalEscKeydown = (evt) => {
   }
 };
 
-export const openPostModal = (post) => {
+const clearComments = (parent) => {
+  for (let i = parent.children.length - 1; i >= 0; i--) {
+    const child = parent.children[i];
+    socialCommentList.removeChild(child);
+  }
+}
+
+const openPostModal = (post) => {
   document.body.classList.add('modal-open');
   postModal.classList.remove('hidden');
 
-  const postComments = socialComments.querySelectorAll('li')
-
-  for (let i = 0; i <= postComments.length - 1; i++) {
-    postComments[i].remove();
-  }
-
-  creatPostModal(post);
-  document.addEventListener('keydown', onModalEscKeydown);
+  clearComments(socialCommentList);
+  renderPost(post);
 };
 
 const closePostModal = () => {
   document.body.classList.remove('modal-open');
   postModal.classList.add('hidden');
+  socialCommentCount.classList.remove('hidden');
+  commentsLoader.classList.remove('hidden');
+
   document.removeEventListener('keydown', onModalEscKeydown);
+  commentsLoader.removeEventListener('click', onRenderComments);
 }
 
-const creatPostModal = (post) => {
+const onRenderComments = () => {
+  renderComments();
+}
+
+const renderPost = (post) => {
   postModal.querySelector('.big-picture__img img').setAttribute('src', post.url)
   postModal.querySelector('.likes-count').textContent = post.likes;
-  postModal.querySelector('.comments-count').textContent = post.comments.lenghth;
+  postModal.querySelector('.comments-count').textContent = post.comments.length;
   postModal.querySelector('.social__caption').textContent = post.description;
 
-  post.comments.forEach((comment) => {
-    const newSocialComment = socialComment.cloneNode(true);
-    newSocialComment.querySelector('.social__picture').setAttribute('src', comment.avatar);
-    newSocialComment.querySelector('.social__text').textContent = comment.message;
-    newSocialComment.querySelector('.social__picture').setAttribute('alt', comment.name);
-    socialComments.appendChild(newSocialComment);
+  comments = [...post.comments];
+
+  renderComments();
+  commentsLoader.addEventListener('click', onRenderComments);
+  postModalCloseButton.addEventListener('click', () => {
+    closePostModal();
   });
+  document.addEventListener('keydown', onModalEscKeydown);
 };
 
-postModalCloseButton.addEventListener('click', () => {
-  closePostModal();
-});
+const renderComments = () => {
+  if (comments.length <= MAX_COMMENT_COUNT) {
+    socialCommentCount.classList.add('hidden');
+    commentsLoader.classList.add('hidden');
+  }
 
+  comments.splice(0, MAX_COMMENT_COUNT).forEach(renderComment);
+};
 
+const renderComment = (comment) => {
+  const newSocialComment = socialComment.cloneNode(true);
+  newSocialComment.querySelector('.social__picture').setAttribute('src', comment.avatar);
+  newSocialComment.querySelector('.social__text').textContent = comment.message;
+  newSocialComment.querySelector('.social__picture').setAttribute('alt', comment.name);
+  socialCommentList.appendChild(newSocialComment);
+}
+
+export {
+  openPostModal
+}
