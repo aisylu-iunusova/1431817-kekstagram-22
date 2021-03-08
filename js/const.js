@@ -7,3 +7,5 @@ export const MAX_LENGTH_HASHTAG = 20;
 export const MAX_LENGTH_COMMENT = 140;
 export const SHOW_ERROR_MESSAGE_TIME = 3000;
 export const MAX_COMMENT_COUNT = 5;
+export const FILTER_RANDOM_POST_QUANTITY = 10;
+export const RERENDER_DELAY = 500;

@@ -1,5 +1,5 @@
 import { isEscEvent } from './util.js';
-import { MAX_COMMENT_COUNT } from './const.js'
+import { MAX_COMMENT_COUNT } from './const.js';
 
 const postModal = document.querySelector('.big-picture');
 const postModalCloseButton = document.querySelector('.big-picture__cancel');
