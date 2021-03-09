@@ -5,6 +5,7 @@ import { renderGallery } from './gallery.js';
 const filtersSection = document.querySelector('.img-filters');
 const filtersForm = document.querySelector('.img-filters__form');
 const filters = document.querySelectorAll('.img-filters__button');
+const _ = window._;
 
 const getPostsSortByComments = ([...newPosts]) => {
   newPosts.sort((a, b) => b.comments.length - a.comments.length);
@@ -41,24 +42,20 @@ const toggleFilters = (currentFilter) => {
   currentFilter.classList.add('img-filters__button--active');
 }
 
-const filterByRandomThrottle = _.throttle((posts) => filterByRandom(posts), RERENDER_DELAY);
-const filterByCommentsThrottle = _.throttle((posts) => filterByComments(posts), RERENDER_DELAY);
-const filterByDefaultThrottle = _.throttle((posts) => filterByDefault(posts), RERENDER_DELAY);
-
 const renderFilter = (posts) => {
   activateFilters();
 
-  const handleClick = (evt) => {
+  const handleClick = _.debounce((evt) => {
     toggleFilters(evt.target);
 
     if (evt.target.getAttribute('id') === 'filter-random') {
-      filterByRandomThrottle(posts)
+      filterByRandom(posts);
     } else if (evt.target.getAttribute('id') === 'filter-discussed') {
-      filterByCommentsThrottle(posts);
+      filterByComments(posts);
     } else {
-      filterByDefaultThrottle(posts);
+      filterByDefault(posts);
     }
-  }
+  }, RERENDER_DELAY);
 
   filtersForm.addEventListener('click', handleClick);
 }
