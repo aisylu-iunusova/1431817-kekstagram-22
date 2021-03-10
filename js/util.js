@@ -6,6 +6,11 @@ export const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+export const getRandomArrayElement = (array) => {
+  const index = getRandomInt(0, array.length - 1);
+  return array[index];
+}
+
 export const getRandomUniqueInt = (min, max, array) => {
   const id = getRandomInt(min, max);
 
@@ -16,14 +21,22 @@ export const getRandomUniqueInt = (min, max, array) => {
   return id;
 };
 
+export const makeUniqueRandomElement = (array, quantity) => {
+  const previousValues = [];
+  const previousIndex = [];
+
+  for (let i = 0; i < quantity; i++) {
+    const index = getRandomUniqueInt(0, array.length - 1, previousIndex);
+    previousIndex.push(index);
+    previousValues.push(array[index]);
+  }
+
+  return previousValues;
+};
+
 export const checkMaxStringLength = (value, maxLength) => {
   return value.length <= maxLength;
 };
-
-export const getRandomArrayElement = (array) => {
-  const index = getRandomInt(0, array.length - 1);
-  return array[index];
-}
 
 export const isEscEvent = (evt) => {
   return evt.key === ('Escape' || 'Esc');
