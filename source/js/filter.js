@@ -1,11 +1,11 @@
 import { makeUniqueRandomElement } from './util.js'
 import { FILTER_RANDOM_POST_QUANTITY, RERENDER_DELAY } from './const.js';
 import { renderGallery } from './gallery.js';
+import { debounce } from 'lodash';
 
 const filtersSection = document.querySelector('.img-filters');
 const filtersForm = document.querySelector('.img-filters__form');
 const filters = document.querySelectorAll('.img-filters__button');
-const _ = window._;
 
 const getPostsSortByComments = ([...newPosts]) => {
   newPosts.sort((a, b) => b.comments.length - a.comments.length);
@@ -45,7 +45,7 @@ const toggleFilters = (currentFilter) => {
 const renderFilter = (posts) => {
   activateFilters();
 
-  const handleClick = _.debounce((evt) => {
+  const handleClick = debounce((evt) => {
     toggleFilters(evt.target);
 
     if (evt.target.getAttribute('id') === 'filter-random') {
