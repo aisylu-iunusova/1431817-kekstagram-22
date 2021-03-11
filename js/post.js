@@ -7,6 +7,8 @@ const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const socialCommentList = postModal.querySelector('.social__comments');
 const socialComment = socialCommentList.querySelector('.social__comment');
+const visibleCommentsCount = document.querySelector('.visible-comments-count')
+
 let comments = [];
 
 const onModalEscKeydown = (evt) => {
@@ -63,11 +65,10 @@ const renderPost = (post) => {
 
 const renderComments = () => {
   if (comments.length <= MAX_COMMENT_COUNT) {
-    socialCommentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
   }
-
   comments.splice(0, MAX_COMMENT_COUNT).forEach(renderComment);
+  updateVisibleCommentsCount();
 };
 
 const renderComment = (comment) => {
@@ -77,6 +78,10 @@ const renderComment = (comment) => {
   newSocialComment.querySelector('.social__picture').setAttribute('alt', comment.name);
   socialCommentList.appendChild(newSocialComment);
 }
+
+const updateVisibleCommentsCount = () => {
+  visibleCommentsCount.textContent = socialCommentList.getElementsByTagName('li').length;
+};
 
 export {
   openPostModal

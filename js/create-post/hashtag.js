@@ -10,7 +10,7 @@ const getHashtags = () => {
   return hashtags;
 };
 
-export const getInputHashtagFocus = () => {
+const getInputHashtagFocus = () => {
   return isFocus;
 };
 
@@ -66,3 +66,6 @@ imageHashtagInput.addEventListener('input', () => {
 
 })
 
+export {
+  getInputHashtagFocus
+}

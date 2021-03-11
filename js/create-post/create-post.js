@@ -1,5 +1,5 @@
 import { isEscEvent } from '../util.js';
-import {scaleReset} from './scale.js';
+import { resetScale } from './scale.js';
 import { resetEffect } from './effect.js';
 import { getInputHashtagFocus } from './hashtag.js';
 import { getInputCommentFocus } from './comment.js';
@@ -26,7 +26,7 @@ const closeCreatePost = () => {
   uploadFileInput.value = '';
   document.querySelector('.img-upload__form').reset();
   resetEffect();
-  scaleReset();
+  resetScale();
 }
 
 const onCreatPostEscKeydown = (evt) => {

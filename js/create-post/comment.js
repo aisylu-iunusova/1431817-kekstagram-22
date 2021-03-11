@@ -3,8 +3,7 @@ import { MAX_LENGTH_COMMENT } from '../const.js'
 const imageInputComment = document.querySelector('.text__description');
 let isFocus = false;
 
-
-export const getInputCommentFocus = () => {
+const getInputCommentFocus = () => {
   return isFocus;
 };
 
@@ -27,3 +26,6 @@ imageInputComment.addEventListener('input', () => {
   imageInputComment.reportValidity();
 });
 
+export {
+  getInputCommentFocus
+}
