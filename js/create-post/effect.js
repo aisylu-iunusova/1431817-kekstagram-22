@@ -1,5 +1,5 @@
 import { SLIDER_HIDDEN, SLIDER_VISIBLE } from '../const.js'
-import { scaleReset } from './scale.js'
+import { resetScale } from './scale.js'
 
 const postImage = document.querySelector('.img-upload__preview');
 const effects = document.querySelectorAll('.effects__radio');
@@ -84,7 +84,7 @@ const changeImage = (filterName) => {
   });
 };
 
-export const resetEffect = () => {
+const resetEffect = () => {
   effectLevelSlider.setAttribute('style', SLIDER_HIDDEN);
   effectLevelSliderValue.value = '';
   postImage.setAttribute('class', 'img-upload__preview');
@@ -110,7 +110,7 @@ const addEffect = (effectName) => {
 effects.forEach((effect) => {
   effect.addEventListener('change', () => {
     postImage.setAttribute('class', 'img-upload__preview');
-    scaleReset();
+    resetScale();
     if (effect.value === 'none') {
       resetEffect()
     } else {
@@ -121,5 +121,7 @@ effects.forEach((effect) => {
 });
 
 
-
+export {
+  resetEffect
+}
 

@@ -26,8 +26,11 @@ scaleControlBigger.addEventListener('click', () => {
   postImage.style = `transform:scale(${scaleValue / 100})`;
 });
 
-export const scaleReset = () => {
+const resetScale = () => {
   scaleControlValue.value = '100%';
   scaleValue = 100;
 };
 
+export {
+  resetScale
+}

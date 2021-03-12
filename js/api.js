@@ -1,6 +1,6 @@
 const API_URL = 'https://22.javascript.pages.academy/kekstagram';
 
-export const getPosts = (onSuccess, onError) => {
+const getPosts = (onSuccess, onError) => {
   fetch(`${API_URL}/data`)
     .then((response) => response.json())
     .then((posts) => {
@@ -11,7 +11,7 @@ export const getPosts = (onSuccess, onError) => {
     })
 };
 
-export const sendPost = (onSuccess, onError, body) => {
+const sendPost = (onSuccess, onError, body) => {
   fetch(API_URL, {
     method: 'POST',
     body,
@@ -25,5 +25,8 @@ export const sendPost = (onSuccess, onError, body) => {
     })
 };
 
-
+export {
+  getPosts,
+  sendPost
+};
 
