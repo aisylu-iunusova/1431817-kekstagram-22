@@ -18,6 +18,14 @@ const errorMessageTemplate = document.querySelector('#error')
   .content
   .querySelector('.error');
 const errorMessageCloseButton = errorMessageTemplate.querySelector('.error__button');
+const fileChooser = creatPostForm.querySelector('#upload-file');
+const imgPreview = creatPostForm.querySelector('.img-upload__preview img');
+
+fileChooser.addEventListener('change', () => {
+  const file = fileChooser.files[0];
+  const objectURL = URL.createObjectURL(file);
+  imgPreview.setAttribute('src', objectURL);
+})
 
 const closeCreatePost = () => {
   imgEditForm.classList.add('hidden');
@@ -113,3 +121,4 @@ errorMessageTemplate.addEventListener('click', (evt) => {
   if (target != errorMessageTemplate) { return; }
   closeErrorMessage();
 });
+
