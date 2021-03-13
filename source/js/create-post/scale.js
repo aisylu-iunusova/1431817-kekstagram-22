@@ -5,33 +5,44 @@ const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
 const postImage = document.querySelector('.img-upload__preview img');
 
-let scaleValue = 100;
+let scaleValue = MAX_SCALE;
 
 const scalingImage = (scale) => {
-  scaleControlValue.value = `${scale}%`;
-  postImage.style = `transform:scale(${scale / 100})`;
+  scaleControlValue.setAttribute('value', `${scale}%`);
+  postImage.style.transform = `scale(${scale / MAX_SCALE})`;
 };
 
-scaleControlSmaller.addEventListener('click', () => {
-  if (scaleValue > MIN_SCALE && scaleValue <= MAX_SCALE) {
-    scaleValue -= STEP_SCALE;
-  }
-  scalingImage(scaleValue);
-});
+const resetScale = () => {
+  scalingImage(MAX_SCALE);
+  scaleValue = MAX_SCALE;
+};
 
-
-scaleControlBigger.addEventListener('click', () => {
+const zoomInImage = () => {
   if (scaleValue >= MIN_SCALE && scaleValue < MAX_SCALE) {
     scaleValue += STEP_SCALE;
   }
   scalingImage(scaleValue);
-});
+};
 
-const resetScale = () => {
-  scalingImage(100);
-  scaleValue = 100;
+const zoomOutImage = () => {
+  if (scaleValue > MIN_SCALE && scaleValue <= MAX_SCALE) {
+    scaleValue -= STEP_SCALE;
+  }
+  scalingImage(scaleValue);
+};
+
+const addEventsForScale = () => {
+  scaleControlSmaller.addEventListener('click', zoomOutImage);
+  scaleControlBigger.addEventListener('click', zoomInImage);
+};
+
+const removeEventsForScale = () => {
+  scaleControlSmaller.removeEventListener('click', zoomOutImage);
+  scaleControlBigger.removeEventListener('click', zoomInImage);
 };
 
 export {
-  resetScale
+  resetScale,
+  addEventsForScale,
+  removeEventsForScale
 }

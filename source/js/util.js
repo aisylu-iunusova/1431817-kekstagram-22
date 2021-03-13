@@ -9,7 +9,7 @@ export const getRandomInt = (min, max) => {
 export const getRandomArrayElement = (array) => {
   const index = getRandomInt(0, array.length - 1);
   return array[index];
-}
+};
 
 export const getRandomUniqueInt = (min, max, array) => {
   const id = getRandomInt(min, max);
@@ -44,23 +44,33 @@ export const isEscEvent = (evt) => {
 
 export const showErrorMessage = (message) => {
   const alertContainer = document.createElement('div');
-  const styles = `
-    z-index: 100;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    padding: 10px 3px;
-    font-size: 25px;
-    text-align: center;
-    background-color: #f74b47;
-  `;
+  const styles = {
+    zIndex: 100,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    padding: '10px 3px',
+    fontSize: '25px',
+    textAlign: 'center',
+    backgroundColor: '#f74b47',
+  };
 
-  alertContainer.setAttribute('style', styles);
+  alertContainer.style = styles;
   alertContainer.textContent = message;
   document.body.append(alertContainer);
 
   setTimeout(() => {
     alertContainer.remove();
   }, SHOW_ERROR_MESSAGE_TIME);
+};
+
+export const checkFocusInput = {
+  isFocus: false,
+  inactiveFocus: () => {
+    checkFocusInput.isFocus = false;
+  },
+  activeFocus: () => {
+    checkFocusInput.isFocus = true;
+  },
 };

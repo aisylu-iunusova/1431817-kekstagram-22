@@ -7,7 +7,7 @@ const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 const socialCommentList = postModal.querySelector('.social__comments');
 const socialComment = socialCommentList.querySelector('.social__comment');
-const visibleCommentsCount = document.querySelector('.visible-comments-count')
+const visibleCommentsCount = document.querySelector('.visible-comments-count');
 
 let comments = [];
 
@@ -23,44 +23,18 @@ const clearComments = (parent) => {
     const child = parent.children[i];
     socialCommentList.removeChild(child);
   }
-}
-
-const openPostModal = (post) => {
-  document.body.classList.add('modal-open');
-  postModal.classList.remove('hidden');
-
-  clearComments(socialCommentList);
-  renderPost(post);
 };
 
-const closePostModal = () => {
-  document.body.classList.remove('modal-open');
-  postModal.classList.add('hidden');
-  socialCommentCount.classList.remove('hidden');
-  commentsLoader.classList.remove('hidden');
+const updateVisibleCommentsCount = () => {
+  visibleCommentsCount.textContent = socialCommentList.getElementsByTagName('li').length;
+};
 
-  document.removeEventListener('keydown', onModalEscKeydown);
-  commentsLoader.removeEventListener('click', onRenderComments);
-}
-
-const onRenderComments = () => {
-  renderComments();
-}
-
-const renderPost = (post) => {
-  postModal.querySelector('.big-picture__img img').setAttribute('src', post.url)
-  postModal.querySelector('.likes-count').textContent = post.likes;
-  postModal.querySelector('.comments-count').textContent = post.comments.length;
-  postModal.querySelector('.social__caption').textContent = post.description;
-
-  comments = [...post.comments];
-
-  renderComments();
-  commentsLoader.addEventListener('click', onRenderComments);
-  postModalCloseButton.addEventListener('click', () => {
-    closePostModal();
-  });
-  document.addEventListener('keydown', onModalEscKeydown);
+const renderComment = (comment) => {
+  const newSocialComment = socialComment.cloneNode(true);
+  newSocialComment.querySelector('.social__picture').src = comment.avatar;
+  newSocialComment.querySelector('.social__text').textContent = comment.message;
+  newSocialComment.querySelector('.social__picture').alt = comment.name;
+  socialCommentList.appendChild(newSocialComment);
 };
 
 const renderComments = () => {
@@ -71,16 +45,45 @@ const renderComments = () => {
   updateVisibleCommentsCount();
 };
 
-const renderComment = (comment) => {
-  const newSocialComment = socialComment.cloneNode(true);
-  newSocialComment.querySelector('.social__picture').setAttribute('src', comment.avatar);
-  newSocialComment.querySelector('.social__text').textContent = comment.message;
-  newSocialComment.querySelector('.social__picture').setAttribute('alt', comment.name);
-  socialCommentList.appendChild(newSocialComment);
+const onRenderComments = () => {
+  renderComments();
+};
+
+const onClosePostModal = () => {
+  closePostModal();
 }
 
-const updateVisibleCommentsCount = () => {
-  visibleCommentsCount.textContent = socialCommentList.getElementsByTagName('li').length;
+const renderPost = (post) => {
+  postModal.querySelector('.big-picture__img img').src = post.url;
+  postModal.querySelector('.likes-count').textContent = post.likes;
+  postModal.querySelector('.comments-count').textContent = post.comments.length;
+  postModal.querySelector('.social__caption').textContent = post.description;
+
+  comments = [...post.comments];
+  renderComments();
+};
+
+const openPostModal = (post) => {
+  document.body.classList.add('modal-open');
+  postModal.classList.remove('hidden');
+
+  clearComments(socialCommentList);
+  renderPost(post);
+
+  commentsLoader.addEventListener('click', onRenderComments);
+  postModalCloseButton.addEventListener('click', onClosePostModal);
+  document.addEventListener('keydown', onModalEscKeydown);
+};
+
+const closePostModal = () => {
+  document.body.classList.remove('modal-open');
+  postModal.classList.add('hidden');
+  socialCommentCount.classList.remove('hidden');
+  commentsLoader.classList.remove('hidden');
+
+  commentsLoader.removeEventListener('click', onRenderComments);
+  postModalCloseButton.removeEventListener('click', onClosePostModal);
+  document.removeEventListener('keydown', onModalEscKeydown);
 };
 
 export {

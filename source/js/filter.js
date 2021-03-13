@@ -1,4 +1,4 @@
-import { makeUniqueRandomElement } from './util.js'
+import { makeUniqueRandomElement } from './util.js';
 import { FILTER_RANDOM_POST_QUANTITY, RERENDER_DELAY } from './const.js';
 import { renderGallery } from './gallery.js';
 import { debounce } from 'lodash';
@@ -10,11 +10,11 @@ const filters = document.querySelectorAll('.img-filters__button');
 const getPostsSortByComments = ([...newPosts]) => {
   newPosts.sort((a, b) => b.comments.length - a.comments.length);
   return newPosts
-}
+};
 
 const getPostsByRandom = (posts) => {
   return makeUniqueRandomElement(posts, FILTER_RANDOM_POST_QUANTITY);
-}
+};
 
 const filterByRandom = (posts) => {
   const randomPosts = getPostsByRandom(posts);
@@ -32,7 +32,7 @@ const filterByDefault = (posts) => {
 
 const activateFilters = () => {
   filtersSection.classList.remove('img-filters--inactive');
-}
+};
 
 const toggleFilters = (currentFilter) => {
   for (const filter of filters) {
@@ -40,7 +40,7 @@ const toggleFilters = (currentFilter) => {
   }
 
   currentFilter.classList.add('img-filters__button--active');
-}
+};
 
 const renderFilter = (posts) => {
   activateFilters();
@@ -48,9 +48,9 @@ const renderFilter = (posts) => {
   const handleClick = debounce((evt) => {
     toggleFilters(evt.target);
 
-    if (evt.target.getAttribute('id') === 'filter-random') {
+    if (evt.target.id === 'filter-random') {
       filterByRandom(posts);
-    } else if (evt.target.getAttribute('id') === 'filter-discussed') {
+    } else if (evt.target.id === 'filter-discussed') {
       filterByComments(posts);
     } else {
       filterByDefault(posts);
@@ -58,7 +58,7 @@ const renderFilter = (posts) => {
   }, RERENDER_DELAY);
 
   filtersForm.addEventListener('click', handleClick);
-}
+};
 
 export {
   renderFilter
