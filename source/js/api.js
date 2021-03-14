@@ -8,7 +8,7 @@ const getPosts = (onSuccess, onError) => {
     })
     .catch((error) => {
       onError(error);
-    })
+    });
 };
 
 const sendPost = (onSuccess, onError, body) => {
@@ -22,11 +22,11 @@ const sendPost = (onSuccess, onError, body) => {
     })
     .catch((error) => {
       onError(error);
-    })
+    });
 };
 
 export {
   getPosts,
   sendPost
-};
+}
 

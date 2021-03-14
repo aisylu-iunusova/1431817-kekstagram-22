@@ -1,8 +1,8 @@
 export const MIN_SCALE = 25;
 export const MAX_SCALE = 100;
 export const STEP_SCALE = 25;
-export const SLIDER_HIDDEN = 'display:none;';
-export const SLIDER_VISIBLE = 'display:block;';
+export const SLIDER_HIDDEN = 'none';
+export const SLIDER_VISIBLE = 'block';
 export const MAX_LENGTH_HASHTAG = 20;
 export const MAX_LENGTH_COMMENT = 140;
 export const SHOW_ERROR_MESSAGE_TIME = 3000;

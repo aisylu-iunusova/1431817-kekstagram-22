@@ -1,15 +1,15 @@
 import { isEscEvent } from '../util.js';
-import { resetScale } from './scale.js';
-import { resetEffect } from './effect.js';
-import { getInputHashtagFocus } from './hashtag.js';
-import { getInputCommentFocus } from './comment.js';
+import { resetScale, addEventsForScale, removeEventsForScale } from './scale.js';
+import { resetEffect, addEventsForEffects, removeEventsForEffects } from './effect.js';
+import { getInputHashtagFocus, addEventsForHashtag, removeEventsForHashtag } from './hashtag.js';
+import { getInputCommentFocus, addEventsForComment, removeEventsForComment } from './comment.js';
 import { sendPost } from '../api.js';
 
 const uploadFileInput = document.querySelector('#upload-file');
 const imgEditForm = document.querySelector('.img-upload__overlay');
 const creatPostCloseButton = document.querySelector('#upload-cancel');
 const creatPostForm = document.querySelector('.img-upload__form');
-const mainTag = document.querySelector('main')
+const mainTag = document.querySelector('main');
 const successMessageTemplate = document.querySelector('#success')
   .content
   .querySelector('.success');
@@ -24,22 +24,26 @@ const imgPreview = creatPostForm.querySelector('.img-upload__preview img');
 fileChooser.addEventListener('change', () => {
   const file = fileChooser.files[0];
   const objectURL = URL.createObjectURL(file);
-  imgPreview.setAttribute('src', objectURL);
-})
+  imgPreview.src = objectURL;
+});
 
 const closeCreatePost = () => {
+  creatPostForm.reset();
   imgEditForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onCreatPostEscKeydown);
   uploadFileInput.value = '';
-  document.querySelector('.img-upload__form').reset();
+
   resetEffect();
   resetScale();
-}
+  document.removeEventListener('keydown', onCreatPostEscKeydown);
+};
 
 const onCreatPostEscKeydown = (evt) => {
-
   if (isEscEvent(evt) && !getInputHashtagFocus() && !getInputCommentFocus()) {
+    removeEventsForHashtag();
+    removeEventsForComment();
+    removeEventsForEffects();
+    removeEventsForScale();
     closeCreatePost();
   }
 };
@@ -47,6 +51,12 @@ const onCreatPostEscKeydown = (evt) => {
 uploadFileInput.addEventListener('change', () => {
   imgEditForm.classList.remove('hidden');
   document.body.classList.add('modal-open');
+
+  addEventsForComment();
+  addEventsForHashtag();
+  addEventsForEffects();
+  addEventsForScale();
+
   document.addEventListener('keydown', onCreatPostEscKeydown)
 });
 
@@ -56,6 +66,7 @@ creatPostCloseButton.addEventListener('click', () => {
 
 creatPostForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
+
   sendPost(() => {
     creatPostForm.reset();
     closeCreatePost();
@@ -64,7 +75,7 @@ creatPostForm.addEventListener('submit', (evt) => {
     showErrorMessage();
     closeCreatePost();
   }, new FormData(evt.target))
-})
+});
 
 const showSuccessMessage = () => {
   mainTag.appendChild(successMessageTemplate);
@@ -118,7 +129,10 @@ const errorMessageEscKeydown = (evt) => {
 errorMessageTemplate.addEventListener('click', (evt) => {
   const target = evt.target;
 
-  if (target != errorMessageTemplate) { return; }
+  if (target != errorMessageTemplate) {
+    return;
+  }
+
   closeErrorMessage();
 });
 

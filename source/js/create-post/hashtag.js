@@ -1,7 +1,11 @@
 import { MAX_LENGTH_HASHTAG } from '../const.js';
+import { checkFocusInput } from '../util.js';
 
 const imageHashtagInput = document.querySelector('.text__hashtags');
-let isFocus = false;
+
+const checkDuplicateElement = (array) => {
+  return array.some((element, index) => array.lastIndexOf(element) !== index);
+};
 
 const getHashtags = () => {
   const value = imageHashtagInput.value;
@@ -11,23 +15,10 @@ const getHashtags = () => {
 };
 
 const getInputHashtagFocus = () => {
-  return isFocus;
+  return checkFocusInput.isFocus;
 };
 
-imageHashtagInput.addEventListener('focus', () => {
-  isFocus = true;
-});
-
-imageHashtagInput.addEventListener('blur', () => {
-  isFocus = false;
-});
-
-const checkDuplicateElement = (array) => {
-  return array.some((element, index) => array.lastIndexOf(element) !== index);
-};
-
-
-imageHashtagInput.addEventListener('input', () => {
+const validateHashtagInput = () => {
   imageHashtagInput.value = imageHashtagInput.value.replace('  ', ' ');
 
   const hashtags = getHashtags();
@@ -63,9 +54,22 @@ imageHashtagInput.addEventListener('input', () => {
   });
 
   imageHashtagInput.reportValidity();
+};
 
-})
+const addEventsForHashtag = () => {
+  imageHashtagInput.addEventListener('focus', checkFocusInput.activeFocus);
+  imageHashtagInput.addEventListener('blur', checkFocusInput.inactiveFocus);
+  imageHashtagInput.addEventListener('input', validateHashtagInput);
+};
+
+const removeEventsForHashtag = () => {
+  imageHashtagInput.removeEventListener('focus', checkFocusInput.activeFocus);
+  imageHashtagInput.removeEventListener('blur', checkFocusInput.inactiveFocus);
+  imageHashtagInput.removeEventListener('input', validateHashtagInput);
+};
 
 export {
-  getInputHashtagFocus
+  getInputHashtagFocus,
+  addEventsForHashtag,
+  removeEventsForHashtag
 }

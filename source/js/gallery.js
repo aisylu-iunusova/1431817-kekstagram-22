@@ -11,7 +11,7 @@ const clearGallery = () => {
   for (const post of posts) {
     post.remove();
   }
-}
+};
 
 const renderGallery = (posts) => {
   clearGallery();
@@ -19,7 +19,7 @@ const renderGallery = (posts) => {
   posts.forEach(({ url, likes, comments }) => {
     const postElement = postTemplate.cloneNode(true);
 
-    postElement.querySelector('.picture__img').setAttribute('src', url);
+    postElement.querySelector('.picture__img').src = url;
     postElement.querySelector('.picture__likes').textContent = likes;
     postElement.querySelector('.picture__comments').textContent = comments.length;
 
