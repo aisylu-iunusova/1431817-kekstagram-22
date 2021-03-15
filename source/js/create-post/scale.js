@@ -17,14 +17,14 @@ const resetScale = () => {
   scaleValue = MAX_SCALE;
 };
 
-const zoomInImage = () => {
+const onZoomInImage = () => {
   if (scaleValue >= MIN_SCALE && scaleValue < MAX_SCALE) {
     scaleValue += STEP_SCALE;
   }
   scalingImage(scaleValue);
 };
 
-const zoomOutImage = () => {
+const onZoomOutImage = () => {
   if (scaleValue > MIN_SCALE && scaleValue <= MAX_SCALE) {
     scaleValue -= STEP_SCALE;
   }
@@ -32,13 +32,13 @@ const zoomOutImage = () => {
 };
 
 const addEventsForScale = () => {
-  scaleControlSmaller.addEventListener('click', zoomOutImage);
-  scaleControlBigger.addEventListener('click', zoomInImage);
+  scaleControlSmaller.addEventListener('click', onZoomOutImage);
+  scaleControlBigger.addEventListener('click', onZoomInImage);
 };
 
 const removeEventsForScale = () => {
-  scaleControlSmaller.removeEventListener('click', zoomOutImage);
-  scaleControlBigger.removeEventListener('click', zoomInImage);
+  scaleControlSmaller.removeEventListener('click', onZoomOutImage);
+  scaleControlBigger.removeEventListener('click', onZoomInImage);
 };
 
 export {

@@ -9,3 +9,10 @@ export const SHOW_ERROR_MESSAGE_TIME = 3000;
 export const MAX_COMMENT_COUNT = 5;
 export const FILTER_RANDOM_POST_QUANTITY = 10;
 export const RERENDER_DELAY = 500;
+
+export const FILTERS_INACTIVE = 'img-filters--inactive';
+export const FILTERS_BUTTON_ACTIVE = 'img-filters__button--active';
+export const FILTER_RANDOM = 'filter-random';
+export const FILTER_DISCUSSED = 'filter-discussed';
+export const HIDDEN = 'hidden';
+export const POST_MODAL_OPEN = 'modal-open';

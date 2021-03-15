@@ -23,11 +23,11 @@ export const getRandomUniqueInt = (min, max, array) => {
 
 export const makeUniqueRandomElement = (array, quantity) => {
   const previousValues = [];
-  const previousIndex = [];
+  const previousIndices = [];
 
   for (let i = 0; i < quantity; i++) {
-    const index = getRandomUniqueInt(0, array.length - 1, previousIndex);
-    previousIndex.push(index);
+    const index = getRandomUniqueInt(0, array.length - 1, previousIndices);
+    previousIndices.push(index);
     previousValues.push(array[index]);
   }
 

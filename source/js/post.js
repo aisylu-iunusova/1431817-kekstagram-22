@@ -1,5 +1,5 @@
 import { isEscEvent } from './util.js';
-import { MAX_COMMENT_COUNT } from './const.js';
+import { MAX_COMMENT_COUNT, HIDDEN, POST_MODAL_OPEN } from './const.js';
 
 const postModal = document.querySelector('.big-picture');
 const postModalCloseButton = document.querySelector('.big-picture__cancel');
@@ -39,7 +39,7 @@ const renderComment = (comment) => {
 
 const renderComments = () => {
   if (comments.length <= MAX_COMMENT_COUNT) {
-    commentsLoader.classList.add('hidden');
+    commentsLoader.classList.add(HIDDEN);
   }
   comments.splice(0, MAX_COMMENT_COUNT).forEach(renderComment);
   updateVisibleCommentsCount();
@@ -64,8 +64,8 @@ const renderPost = (post) => {
 };
 
 const openPostModal = (post) => {
-  document.body.classList.add('modal-open');
-  postModal.classList.remove('hidden');
+  document.body.classList.add(POST_MODAL_OPEN);
+  postModal.classList.remove(HIDDEN);
 
   clearComments(socialCommentList);
   renderPost(post);
@@ -76,10 +76,10 @@ const openPostModal = (post) => {
 };
 
 const closePostModal = () => {
-  document.body.classList.remove('modal-open');
-  postModal.classList.add('hidden');
-  socialCommentCount.classList.remove('hidden');
-  commentsLoader.classList.remove('hidden');
+  document.body.classList.remove(POST_MODAL_OPEN);
+  postModal.classList.add(HIDDEN);
+  socialCommentCount.classList.remove(HIDDEN);
+  commentsLoader.classList.remove(HIDDEN);
 
   commentsLoader.removeEventListener('click', onRenderComments);
   postModalCloseButton.removeEventListener('click', onClosePostModal);

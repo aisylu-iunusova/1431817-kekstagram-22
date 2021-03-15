@@ -46,13 +46,13 @@ window.noUiSlider.create(effectLevel, {
   step: 0.1,
   connect: 'lower',
   format: {
-    to: function (value) {
+    to: (value) => {
       if (Number.isInteger(value)) {
         return value.toFixed(0);
       }
       return value.toFixed(1);
     },
-    from: function (value) {
+    from: (value) => {
       return parseFloat(value);
     },
   },
@@ -107,7 +107,7 @@ const addEffect = (effectName) => {
   effectLevel.noUiSlider.set(sliderOption[effectName].max);
 };
 
-const changeImageEffect = (effect) => {
+const onChangeImageEffect = (effect) => {
   postImage.removeAttribute('class');
   resetScale();
 
@@ -122,13 +122,13 @@ const changeImageEffect = (effect) => {
 
 const addEventsForEffects = () => {
   effects.forEach((effect) => {
-    effect.addEventListener('change', changeImageEffect.bind(this, effect));
+    effect.addEventListener('change', onChangeImageEffect.bind(this, effect));
   });
 };
 
 const removeEventsForEffects = () => {
   effects.forEach((effect) => {
-    effect.removeEventListener('change', changeImageEffect.bind(this, effect));
+    effect.removeEventListener('change', onChangeImageEffect.bind(this, effect));
   });
 };
 

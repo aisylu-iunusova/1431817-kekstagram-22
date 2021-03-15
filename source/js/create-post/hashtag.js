@@ -18,7 +18,7 @@ const getInputHashtagFocus = () => {
   return checkFocusInput.isFocus;
 };
 
-const validateHashtagInput = () => {
+const onValidateHashtagInput = () => {
   imageHashtagInput.value = imageHashtagInput.value.replace('  ', ' ');
 
   const hashtags = getHashtags();
@@ -47,25 +47,33 @@ const validateHashtagInput = () => {
     } else if (!/^[0-9A-Za-z]+$/.test(hashtag.slice(1))) {
       imageHashtagInput.setCustomValidity('Хештег должен состоять только из букв и цифр');
       return true;
-    } else {
-      imageHashtagInput.setCustomValidity('');
-      return false;
     }
+
+    imageHashtagInput.setCustomValidity('');
+    return false;
   });
 
   imageHashtagInput.reportValidity();
 };
 
+const onToggleFocusInputHashtag = () => {
+  if (getInputHashtagFocus()) {
+    checkFocusInput.inactiveFocus();
+  } else {
+    checkFocusInput.activeFocus();
+  }
+};
+
 const addEventsForHashtag = () => {
-  imageHashtagInput.addEventListener('focus', checkFocusInput.activeFocus);
-  imageHashtagInput.addEventListener('blur', checkFocusInput.inactiveFocus);
-  imageHashtagInput.addEventListener('input', validateHashtagInput);
+  imageHashtagInput.addEventListener('focus', onToggleFocusInputHashtag);
+  imageHashtagInput.addEventListener('blur', onToggleFocusInputHashtag);
+  imageHashtagInput.addEventListener('input', onValidateHashtagInput);
 };
 
 const removeEventsForHashtag = () => {
-  imageHashtagInput.removeEventListener('focus', checkFocusInput.activeFocus);
-  imageHashtagInput.removeEventListener('blur', checkFocusInput.inactiveFocus);
-  imageHashtagInput.removeEventListener('input', validateHashtagInput);
+  imageHashtagInput.removeEventListener('focus', onToggleFocusInputHashtag);
+  imageHashtagInput.removeEventListener('blur', onToggleFocusInputHashtag);
+  imageHashtagInput.removeEventListener('input', onValidateHashtagInput);
 };
 
 export {

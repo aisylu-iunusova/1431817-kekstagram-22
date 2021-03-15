@@ -7,7 +7,7 @@ const getInputCommentFocus = () => {
   return checkFocusInput.isFocus;
 };
 
-const validateInputComment = () => {
+const onValidateInputComment = () => {
   if (imageInputComment.value.length >= MAX_LENGTH_COMMENT) {
     imageInputComment.setCustomValidity('Максимальное длина комментария 140 символов');
   } else {
@@ -17,16 +17,24 @@ const validateInputComment = () => {
   imageInputComment.reportValidity();
 };
 
+const onToggleFocusInputComment = () => {
+  if (getInputCommentFocus()) {
+    checkFocusInput.inactiveFocus();
+  } else {
+    checkFocusInput.activeFocus();
+  }
+};
+
 const addEventsForComment = () => {
-  imageInputComment.addEventListener('focus', checkFocusInput.activeFocus);
-  imageInputComment.addEventListener('blur', checkFocusInput.inactiveFocus);
-  imageInputComment.addEventListener('input', validateInputComment);
+  imageInputComment.addEventListener('focus', onToggleFocusInputComment);
+  imageInputComment.addEventListener('blur', onToggleFocusInputComment);
+  imageInputComment.addEventListener('input', onValidateInputComment);
 };
 
 const removeEventsForComment = () => {
-  imageInputComment.removeEventListener('focus', checkFocusInput.activeFocus);
-  imageInputComment.removeEventListener('blur', checkFocusInput.inactiveFocus);
-  imageInputComment.removeEventListener('input', validateInputComment);
+  imageInputComment.removeEventListener('focus', onToggleFocusInputComment);
+  imageInputComment.removeEventListener('blur', onToggleFocusInputComment);
+  imageInputComment.removeEventListener('input', onValidateInputComment);
 };
 
 export {

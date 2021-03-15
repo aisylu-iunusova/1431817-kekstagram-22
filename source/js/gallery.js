@@ -23,12 +23,12 @@ const renderGallery = (posts) => {
     postElement.querySelector('.picture__likes').textContent = likes;
     postElement.querySelector('.picture__comments').textContent = comments.length;
 
-    const handleClick = (evt) => {
+    const onOpenPostModal = (evt) => {
       evt.preventDefault();
       openPostModal({ url, likes, comments });
     };
 
-    postElement.addEventListener('click', handleClick);
+    postElement.addEventListener('click', onOpenPostModal);
     postList.appendChild(postElement);
   });
 };

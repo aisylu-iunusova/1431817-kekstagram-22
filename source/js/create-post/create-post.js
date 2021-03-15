@@ -4,6 +4,7 @@ import { resetEffect, addEventsForEffects, removeEventsForEffects } from './effe
 import { getInputHashtagFocus, addEventsForHashtag, removeEventsForHashtag } from './hashtag.js';
 import { getInputCommentFocus, addEventsForComment, removeEventsForComment } from './comment.js';
 import { sendPost } from '../api.js';
+import { POST_MODAL_OPEN, HIDDEN } from '../const.js';
 
 const uploadFileInput = document.querySelector('#upload-file');
 const imgEditForm = document.querySelector('.img-upload__overlay');
@@ -29,8 +30,8 @@ fileChooser.addEventListener('change', () => {
 
 const closeCreatePost = () => {
   creatPostForm.reset();
-  imgEditForm.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  imgEditForm.classList.add(HIDDEN);
+  document.body.classList.remove(POST_MODAL_OPEN);
   uploadFileInput.value = '';
 
   resetEffect();
@@ -49,8 +50,8 @@ const onCreatPostEscKeydown = (evt) => {
 };
 
 uploadFileInput.addEventListener('change', () => {
-  imgEditForm.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+  imgEditForm.classList.remove(HIDDEN);
+  document.body.classList.add(POST_MODAL_OPEN);
 
   addEventsForComment();
   addEventsForHashtag();
@@ -79,19 +80,19 @@ creatPostForm.addEventListener('submit', (evt) => {
 
 const showSuccessMessage = () => {
   mainTag.appendChild(successMessageTemplate);
-  document.addEventListener('keydown', successMessageEscKeydown);
+  document.addEventListener('keydown', onSuccessMessageEscKeydown);
 };
 
 const closeSuccessMessage = () => {
   mainTag.removeChild(successMessageTemplate);
-  document.removeEventListener('keydown', successMessageEscKeydown);
+  document.removeEventListener('keydown', onSuccessMessageEscKeydown);
 };
 
 successMessageCloseButton.addEventListener('click', () => {
   closeSuccessMessage();
 });
 
-const successMessageEscKeydown = (evt) => {
+const onSuccessMessageEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeSuccessMessage();
@@ -101,25 +102,25 @@ const successMessageEscKeydown = (evt) => {
 successMessageTemplate.addEventListener('click', (evt) => {
   const target = evt.target;
 
-  if (target != successMessageTemplate) { return; }
+  if (target !== successMessageTemplate) { return; }
   closeSuccessMessage();
 });
 
 const showErrorMessage = () => {
   mainTag.appendChild(errorMessageTemplate);
-  document.addEventListener('keydown', errorMessageEscKeydown);
+  document.addEventListener('keydown', onErrorMessageEscKeydown);
 };
 
 const closeErrorMessage = () => {
   mainTag.removeChild(errorMessageTemplate);
-  document.removeEventListener('keydown', errorMessageEscKeydown);
+  document.removeEventListener('keydown', onErrorMessageEscKeydown);
 };
 
 errorMessageCloseButton.addEventListener('click', () => {
   closeErrorMessage();
 });
 
-const errorMessageEscKeydown = (evt) => {
+const onErrorMessageEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeErrorMessage();
@@ -129,7 +130,7 @@ const errorMessageEscKeydown = (evt) => {
 errorMessageTemplate.addEventListener('click', (evt) => {
   const target = evt.target;
 
-  if (target != errorMessageTemplate) {
+  if (target !== errorMessageTemplate) {
     return;
   }
 
